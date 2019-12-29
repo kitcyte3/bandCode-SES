@@ -1596,7 +1596,25 @@ void button_init_interrupt(){
     APP_ERROR_CHECK(err_code);
     nrf_drv_gpiote_in_event_enable(bt_pin, true);
 }
+uint8_t* prox_get(){
+    ret_code_t err_code;
+                    //read VCNL prox snesor data
+                    uint8_t address = 0x60; //0x60  for prox                    
+                    uint8_t dataToSend2[3] = {0x03,0x00,0x00};
+                    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend2[0], sizeof(dataToSend2), false);
+                    
+                    //first half of read
+                    uint8_t dataToSend[1] = {0xF2};
+                    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend[0], sizeof(dataToSend), true);
 
+
+                    uint8_t read_data[2];
+            err_code = nrf_drv_twi_rx(&m_twi, address, &read_data[0], 2);
+                    printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
+                    if (err_code == NRF_SUCCESS){}
+                        nrf_delay_ms(200);
+                        return read_data;
+}
 //===============================END SENSOR STUFF=====================================
 
 /**@brief Function for application main entry.
@@ -1668,7 +1686,12 @@ int main(void)
     MUX_set(0,0,1,1);
     RGBW_on();
 
-    MUX_set(1,1,1,1);   
+    MUX_set(1,1,1,1);  
+
+    //get prox data
+    uint8_t * proxData = 0;
+    proxData = prox_get();
+
     //end sensor code   
     while(m_custom_value <= 1)
     {
