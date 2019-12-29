@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_srv_common.o: \
- F:\vidar_modified_2\components\ble\common\ble_srv_common.c \
- F:\vidar_modified_2\components\ble\common\ble_srv_common.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_srv_common.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_srv_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \

@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/crc16.o: \
- F:\vidar_modified_2\components\libraries\crc16\crc16.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\crc16\crc16.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
@@ -23,5 +23,5 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/crc16.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
- F:\vidar_modified_2\components\libraries\crc16\crc16.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\crc16\crc16.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h

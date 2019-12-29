@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp.o: \
- F:\vidar_modified_2\components\libraries\bsp\bsp.c \
- F:\vidar_modified_2\components\libraries\bsp\bsp.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
  ../../../../../../components/boards/boards.h \
@@ -32,7 +32,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp.o: \
  ../../../../../../components/libraries/util/app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h \
  ../../../../../../components/libraries/util/nordic_common.h \
- F:\vidar_modified_2\components\libraries\bsp\bsp_config.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp_config.h \
  ../../../../../../components/libraries/timer/app_timer.h \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h

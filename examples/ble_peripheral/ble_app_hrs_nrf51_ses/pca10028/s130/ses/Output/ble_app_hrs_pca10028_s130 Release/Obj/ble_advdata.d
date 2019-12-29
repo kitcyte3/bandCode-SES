@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_advdata.o: \
- F:\vidar_modified_2\components\ble\common\ble_advdata.c \
- F:\vidar_modified_2\components\ble\common\ble_advdata.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_advdata.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_advdata.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/string.h \
@@ -29,7 +29,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_advdata.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/softdevice/s130/headers/ble_gap.h \
- F:\vidar_modified_2\components\ble\common\ble_srv_common.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_srv_common.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatt.h \
  ../../../../../../components/libraries/util/sdk_common.h \

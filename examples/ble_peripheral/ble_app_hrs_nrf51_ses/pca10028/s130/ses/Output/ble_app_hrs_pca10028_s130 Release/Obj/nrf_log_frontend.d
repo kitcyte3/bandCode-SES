@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/nrf_log_frontend.o: \
- F:\vidar_modified_2\components\libraries\log\src\nrf_log_frontend.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\log\src\nrf_log_frontend.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \

@@ -1,9 +1,9 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/our_service.o: \
- F:\vidar_modified_2\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.c \
+ C:\Users\knigh\Documents\bandCode-SES\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.c \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/string.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
- F:\vidar_modified_2\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.h \
+ C:\Users\knigh\Documents\bandCode-SES\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \

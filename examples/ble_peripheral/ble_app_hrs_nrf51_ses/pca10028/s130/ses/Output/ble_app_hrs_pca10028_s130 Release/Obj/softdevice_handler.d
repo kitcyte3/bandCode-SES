@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
- F:\vidar_modified_2\components\softdevice\common\softdevice_handler\softdevice_handler.c \
- F:\vidar_modified_2\components\softdevice\common\softdevice_handler\softdevice_handler.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\softdevice_handler.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\softdevice_handler.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
  ../../../../../../components/libraries/util/nordic_common.h \
@@ -31,7 +31,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  ../../../../../../components/libraries/util/app_error_weak.h \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
- F:\vidar_modified_2\components\softdevice\common\softdevice_handler\ble_stack_handler_types.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\ble_stack_handler_types.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
@@ -41,8 +41,8 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gatt.h \
  ../../../../../../components/softdevice/s130/headers/ble_gattc.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
- F:\vidar_modified_2\components\softdevice\common\softdevice_handler\ant_stack_handler_types.h \
- F:\vidar_modified_2\components\softdevice\common\softdevice_handler\app_ram_base.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\ant_stack_handler_types.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\app_ram_base.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/string.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/app_error.h \

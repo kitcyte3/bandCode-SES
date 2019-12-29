@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp_btn_ble.o: \
- F:\vidar_modified_2\components\libraries\bsp\bsp_btn_ble.c \
- F:\vidar_modified_2\components\libraries\bsp\bsp_btn_ble.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp_btn_ble.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp_btn_ble.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
@@ -13,7 +13,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp_btn_ble.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gatt.h \
  ../../../../../../components/softdevice/s130/headers/ble_gattc.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
- F:\vidar_modified_2\components\libraries\bsp\bsp.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
  ../../../../../../components/boards/boards.h \
  ../../../../../../components/drivers_nrf/hal/nrf_gpio.h \

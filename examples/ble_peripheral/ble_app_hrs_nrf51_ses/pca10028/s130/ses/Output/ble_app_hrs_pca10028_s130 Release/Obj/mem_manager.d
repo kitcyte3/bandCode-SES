@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/mem_manager.o: \
- F:\vidar_modified_2\components\libraries\mem_manager\mem_manager.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\mem_manager\mem_manager.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \

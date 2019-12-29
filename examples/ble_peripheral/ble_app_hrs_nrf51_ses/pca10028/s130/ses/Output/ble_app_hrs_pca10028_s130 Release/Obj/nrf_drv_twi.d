@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/nrf_drv_twi.o: \
- F:\vidar_modified_2\components\drivers_nrf\twi_master\nrf_drv_twi.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\drivers_nrf\twi_master\nrf_drv_twi.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
@@ -23,7 +23,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/nrf_drv_twi.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
- F:\vidar_modified_2\components\drivers_nrf\twi_master\nrf_drv_twi.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\drivers_nrf\twi_master\nrf_drv_twi.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/drivers_nrf/hal/nrf_twi.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h \

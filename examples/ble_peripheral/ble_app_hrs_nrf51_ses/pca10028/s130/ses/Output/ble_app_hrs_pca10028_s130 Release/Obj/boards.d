@@ -1,6 +1,6 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/boards.o: \
- F:\vidar_modified_2\components\boards\boards.c \
- F:\vidar_modified_2\components\boards\boards.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\boards\boards.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\boards\boards.h \
  ../../../../../../components/drivers_nrf/hal/nrf_gpio.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
  ../../../../../../modules/nrfx/mdk/nrf51.h \
@@ -26,4 +26,4 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/boards.o: \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/libraries/util/app_error_weak.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
- F:\vidar_modified_2\components\boards\pca10028.h
+ C:\Users\knigh\Documents\bandCode-SES\components\boards\pca10028.h

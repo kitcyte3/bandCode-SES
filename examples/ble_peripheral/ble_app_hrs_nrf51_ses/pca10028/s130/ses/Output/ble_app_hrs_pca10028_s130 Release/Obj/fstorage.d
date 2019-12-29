@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/fstorage.o: \
- F:\vidar_modified_2\components\libraries\fstorage\fstorage.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\fstorage\fstorage.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
@@ -23,9 +23,9 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/fstorage.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
- F:\vidar_modified_2\components\libraries\fstorage\fstorage.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\fstorage\fstorage.h \
  ../../../../../../components/libraries/experimental_section_vars/section_vars.h \
- F:\vidar_modified_2\components\libraries\fstorage\fstorage_internal_defs.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\fstorage\fstorage_internal_defs.h \
  ../../../../../../components/softdevice/s130/headers/nrf_soc.h \
  ../../../../../../components/softdevice/s130/headers/nrf_svc.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error_soc.h \

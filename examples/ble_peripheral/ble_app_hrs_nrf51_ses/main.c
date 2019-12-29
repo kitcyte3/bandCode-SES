@@ -45,6 +45,40 @@
 #include "ble_advertising.h"
 #include "ble_conn_state.h"
 
+//SENSOR INCLUDES
+#include "app_uart.h"
+#include "app_error.h"
+#include "nrf_drv_gpiote.h"
+//
+#include <stdio.h>
+//#include "boards.h"
+#include "app_util_platform.h"
+#include "app_error.h"
+#include "nrf_drv_twi.h"
+
+//END SENSOR INCLUDES
+
+
+
+//SENSOR STUFF
+ /* Number of possible TWI addresses. */
+ #define TWI_ADDRESSES      127
+ #define PIN_IN 5
+/* TWI instance. */
+static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(0); //TWI instance 0
+static const nrf_drv_twi_t m_twi1 = NRF_DRV_TWI_INSTANCE(1); //TWI instance 1
+uint8_t readi2cOneByte1(uint8_t deviceAddr, uint8_t read_reg_addr);
+
+// UART code copied over
+//#define ENABLE_LOOPBACK_TEST  /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
+
+#define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
+#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 256                         /**< UART RX buffer size. */
+//END SENSOR STUFF
+
+
+
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -1074,35 +1108,497 @@ static void advertising_start(void)
 
     APP_ERROR_CHECK(err_code);
 }
-
-static void UART_init(){
-  uint32_t err_code_; // modified uint32_t err_code to uint32_t err_code_
-  const app_uart_comm_params_t comm_params =
+//===================================SENSOR STUFF=====================================
+void uart_error_handle(app_uart_evt_t * p_event){
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
     {
-        9,10,12,11,
-        APP_UART_FLOW_CONTROL_ENABLED,
-        false,
-        UART_BAUDRATE_BAUDRATE_Baud115200
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
+}
+
+void MUX_init(){
+    nrf_gpio_cfg_output(30); //S0
+    nrf_gpio_cfg_output(0); //S1
+    nrf_gpio_cfg_output(1); //S2
+    nrf_gpio_cfg_output(2); //S3
+}
+void vibro_init(){
+    nrf_gpio_cfg_output(14);
+}
+void button_init_simple(){
+    nrf_gpio_cfg_input(3,NRF_GPIO_PIN_PULLUP);
+    nrf_gpio_cfg_input(5,NRF_GPIO_PIN_PULLUP);
+}
+void twi_init (void){
+        //make sure TWO0 and TWI1 are both enabled in config text file somewhere else in project
+    ret_code_t err_code;
+
+    const nrf_drv_twi_config_t twi_config = {
+       .scl                = 16, //16
+       .sda                = 15, //15
+       .frequency          = NRF_TWI_FREQ_100K,
+       .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
+       .clear_bus_init     = false
     };
 
-  APP_UART_FIFO_INIT(&comm_params,
-                       UART_RX_BUF_SIZE,
-                       UART_TX_BUF_SIZE,
-                       uart_error_handle,
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code_);
+    err_code = nrf_drv_twi_init(&m_twi, &twi_config, NULL, NULL);
+    APP_ERROR_CHECK(err_code);
 
-  APP_ERROR_CHECK(err_code_);
+    nrf_drv_twi_enable(&m_twi);
 }
-static void sensors_init(){
-  GPIOEXP1_init();
-  MUX_init();
-  twi_init();
-  printf("\r\nFinished twi init: \r\n");
-  LEDS_CONFIGURE(LEDS_MASK);
-  LEDS_OFF(LEDS_MASK);
-  LED_BT_on();
+
+void twi1_init (void){
+        //make sure TWO0 and TWI1 are both enabled in config text file somewhere else in project
+    ret_code_t err_code;
+
+    const nrf_drv_twi_config_t twi1_config = {
+       .scl                = 18, //18
+       .sda                = 17, //17
+       .frequency          = NRF_TWI_FREQ_100K,
+       .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
+       .clear_bus_init     = false
+    };
+
+    err_code = nrf_drv_twi_init(&m_twi1, &twi1_config, NULL, NULL);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_twi_enable(&m_twi1);
 }
+
+//write to twi0
+void writei2c(uint8_t deviceAddr, uint8_t reg_addr, uint8_t data_to_write_high, uint8_t data_to_write_low){
+    //power on spectrum sensor
+    uint8_t dataToWrite[2] = {data_to_write_high, data_to_write_low};
+    ret_code_t err_code = nrf_drv_twi_tx(&m_twi, deviceAddr, &dataToWrite[0], sizeof(dataToWrite), false);
+}
+void writei2cSingle(uint8_t deviceAddr, uint8_t reg_addr, uint8_t data_to_write_high){
+    //power on spectrum sensor
+    uint8_t dataToWrite[2] = {reg_addr, data_to_write_high};
+    ret_code_t err_code = nrf_drv_twi_tx(&m_twi, deviceAddr, &dataToWrite[0], sizeof(dataToWrite), false);
+}
+
+//write to twi1
+void writei2c1(uint8_t deviceAddr, uint8_t reg_addr, uint8_t data_to_write_high, uint8_t data_to_write_low){
+    //power on spectrum sensor
+    uint8_t dataToWrite[2] = {data_to_write_high, data_to_write_low};
+    ret_code_t err_code = nrf_drv_twi_tx(&m_twi1, deviceAddr, &dataToWrite[0], sizeof(dataToWrite), false);
+}
+void writei2cOneByte(uint8_t deviceAddr, uint8_t reg_addr, uint8_t data_to_write){
+    //power on spectrum sensor
+    uint8_t dataToWrite[1] = {data_to_write};
+    ret_code_t err_code = nrf_drv_twi_tx(&m_twi, deviceAddr, &dataToWrite[0], sizeof(dataToWrite), false);
+}
+
+//use twi1
+void writei2cOneByte1(uint8_t deviceAddr, uint8_t reg_addr, uint8_t data_to_write){
+    //power on spectrum sensor
+    uint8_t dataToWrite[1] = {data_to_write};
+    ret_code_t err_code = nrf_drv_twi_tx(&m_twi1, deviceAddr, &dataToWrite[0], sizeof(dataToWrite), false);
+}
+
+uint16_t readi2cHighLow(uint8_t deviceAddr, uint8_t read_reg_addr){
+    //ret_code_t err_code; //to hold return code, currently do nothing with it
+    
+    //READ 1st byte
+    uint16_t data_both;
+    //first half of read
+    uint8_t dataToSend4[1] = {read_reg_addr};
+    nrf_drv_twi_tx(&m_twi, deviceAddr, &dataToSend4[0], sizeof(dataToSend4), true);
+
+
+    uint8_t read_data2[2];
+    nrf_drv_twi_rx(&m_twi, deviceAddr, &read_data2[0], 2);
+    //printf("addr: %x, data: 0x%x 0x%x \r\n",read_reg_addr ,read_data2[1], read_data2[0]);
+    
+    data_both = read_data2[0] | (read_data2[1] << 8);
+    //printf("both: 0x%x \r\n",data_both);
+    
+    return data_both;
+}
+
+uint8_t readi2cOneByte(uint8_t deviceAddr, uint8_t read_reg_addr){
+    //ret_code_t err_code; //to hold return code, currently do nothing with it
+    
+    //READ 1st byte
+    //first half of read
+    uint8_t dataToSend4[1] = {read_reg_addr};
+    nrf_drv_twi_tx(&m_twi, (deviceAddr), &dataToSend4[0], sizeof(dataToSend4), true);
+    
+    uint8_t read_data2[1];
+    nrf_drv_twi_rx(&m_twi, (deviceAddr), &read_data2[0], 1);
+    return read_data2[0];
+}
+
+
+//use twi1
+uint8_t readi2cOneByte1(uint8_t deviceAddr, uint8_t read_reg_addr){
+    //ret_code_t err_code; //to hold return code, currently do nothing with it
+    
+    //READ 1st byte
+    //first half of read
+    uint8_t dataToSend4[1] = {read_reg_addr};
+    nrf_drv_twi_tx(&m_twi1, (deviceAddr<<1)|0x0, &dataToSend4[0], sizeof(dataToSend4), true);
+    
+    uint8_t read_data2[1];
+    nrf_drv_twi_rx(&m_twi1, (deviceAddr<<1)|0x1, &read_data2[0], 1);
+    
+    return read_data2[0];
+}
+
+bool GPIOEXP0_init(){
+    //make sure twi_init() was run before this function.
+    //AND make sure MUX is set to 1111
+                //adr,R/!W      config hi low
+    writei2c((0x22<<1), 0x0c, 0x0,0x0); //config port0 to output
+    writei2c((0x22<<1), 0x0d, 0x0,0x0); //config port1 to output
+    writei2c((0x22<<1), 0x0e, 0x0,0x0); //config port2 to output
+    
+    return 0;
+}
+
+bool GPIOEXP1_init(){
+    //make sure twi_init() was run before this function.
+                //adr,R/!W      config hi low
+    writei2c1((0x23<<1), 0x0c, 0x0,0x0); //config port0 to output
+    writei2c1((0x23<<1), 0x0d, 0x0,0x0); //config port1 to output
+    writei2c1((0x23<<1), 0x0e, 0x0,0x0); //config port2 to output
+    
+    return 0;
+}
+
+uint8_t GPIOEXP1_readPort0(){
+    return readi2cOneByte((0x23<<1)|0x1, 0x4);
+}
+
+uint8_t GPIOEXP0_readPort0(){
+//  return readi2cOneByte((0x22<<1)|0x1, 0x4);
+    return readi2cOneByte((0x22<<1)|0x1, 0x4);
+}
+
+bool LED_BT_blue(){
+    //make sure GPIOEXP1_init was run before this function.
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x38) | (0x30 & 0x38); //0banything & 0b000[fix]111
+    writei2cSingle(0x23, 0x04, res); //set Blue light closer to USB on
+    return 0;
+}
+bool LED_BT_green(){
+    //make sure GPIOEXP1_init was run before this function.
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x38) | (0x28 & 0x38); //0banything & 0b000[fix]111
+    writei2cSingle(0x23, 0x04, res); //set Blue light closer to USB on
+    return 0;
+}
+bool LED_BT_off(){
+    //make sure GPIOEXP1_init was run before this function.
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x38) | (0x38 & 0x38); //0banything & 0b000[fix]111
+    writei2cSingle(0x23, 0x04, res); //set Blue light closer to USB on
+    return 0;
+}
+bool LED_PWR_red(){
+    //make sure GPIOEXP1_init was run before this function.
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x07) | (0x3 & 0x07); //0banything & 0b000000[011]
+    writei2cSingle(0x23, 0x04, res); //set red light away from USB ON
+    return 0;
+}
+bool LED_PWR_green(){
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x07) | (0x05 & 0x07);; //0banything & 0b000000[011]
+    writei2cSingle(0x23, 0x04, res); //set green light away from USB on
+    return 0;
+}
+bool LED_PWR_bluegreen(){
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x07) | (0x04 & 0x07);; //0banything & 0b000000[011]
+    writei2cSingle(0x23, 0x04, res); //set green light away from USB on
+    return 0;
+}
+bool LED_PWR_yellow(){
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x07) | (0x01 & 0x07);; //0banything & 0b000000[011]
+    writei2cSingle(0x23, 0x04, res); //set green light away from USB on
+    return 0;
+}
+bool LED_PWR_off(){
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x23, 0x04); //read LED register
+    res = (res & ~0x07) | (0x07 & 0x07);; //0banything & 0b000000[011]
+    writei2cSingle(0x23, 0x04, res); //set green light away from USB on
+    return 0;
+}
+
+void LED_indicator_init(){
+        //configuration registers set all outputs to outputs instead of default input
+        writei2cSingle(0x23, 0x0C, 0x0); 
+        writei2cSingle(0x23, 0x0D, 0x0); 
+        writei2cSingle(0x23, 0x0E, 0x0); 
+}
+void LED_vertBoard_init(){
+        //configuration registers set all outputs to outputs instead of default input
+        writei2cSingle(0x22, 0x0C, 0x0); 
+        writei2cSingle(0x22, 0x0D, 0x0); 
+        writei2cSingle(0x22, 0x0E, 0x0); 
+}
+
+bool LED_WHITE_on(){
+    //make sure GPIOEXP1_init was run before this function.
+    //read current GPIOEXP1 settings:
+    
+    //LEDS WORK, BUT THIS DRIVER FUNCTION HASNT BEEN IMPLEMENTED CORRECTLY YET  
+    writei2cSingle(0x22, 0x04, 0x0);
+    writei2cSingle(0x22, 0x05, 0x0); 
+    writei2cSingle(0x22, 0x06, 0x0); 
+    
+    return 0;
+}
+
+void MUX_set(bool s3, bool s2, bool s1, bool s0){
+    s3?nrf_gpio_pin_set(2):nrf_gpio_pin_clear(2);
+    s2?nrf_gpio_pin_set(1):nrf_gpio_pin_clear(1);
+    s1?nrf_gpio_pin_set(0):nrf_gpio_pin_clear(0);
+    s0?nrf_gpio_pin_set(30):nrf_gpio_pin_clear(30);
+}
+
+void vibro_start(){
+    nrf_gpio_pin_set(14);
+}
+void vibro_stop(){
+    nrf_gpio_pin_clear(14);
+}
+
+bool RGBW_on(){
+        //turns RGBW sensor on, returns 0 if success, 1 if falied
+                    //addr,  reg,  hi, low
+        writei2c(0x10,0x00,0x00,0x00); //enable RGBW sensors with 80ms integration time
+
+        //read back settings
+        uint16_t i2cResult = readi2cHighLow(0x10, 0x00);
+    
+        return i2cResult != 0x00;
+}
+bool RGBW_off(){
+        //turns RGBW sensor on, returns 0 if success, 1 if falied
+                    //addr,  reg,  hi, low
+        writei2c(0x10,0x00,0x00,0x01); //enable RGBW sensors with 80ms integration time
+
+        //read back settings
+        uint16_t i2cResult = readi2cHighLow(0x10, 0x00);
+    
+        return i2cResult != 0x01;
+}
+double* RGBW_get(){
+    //returns an array of doubles, max value is 255 for each color, skips matrix multiplications
+    bool printResult = true;
+    static double RGBreturn[3] = {0,0,0};
+    double r,g,b, w;
+    
+    //read colors
+    r = readi2cHighLow(0x10, 0x08);// *100 / 96.0;  
+    g = readi2cHighLow(0x10, 0x09);// *100 / 74.0;
+    b = readi2cHighLow(0x10, 0x0A);// *100 / 56.0;
+    w = readi2cHighLow(0x10, 0x0B);
+    
+    //do some math
+    double normalizedR = r;
+    double normalizedG = g;
+    double normalizedB = b;
+    normalizedR = normalizedR/255;
+    normalizedG = normalizedG/255;
+    normalizedB = normalizedB/255;
+    int hexR, hexB, hexG;
+    hexR = normalizedR;
+    hexB = normalizedB;
+    hexG = normalizedG;
+    
+    if(printResult){
+        printf("  raw red: 0x%x\r\n",r );
+        printf("raw green: 0x%x\r\n",g );
+        printf(" raw blue:  0x%x\r\n",b );
+        printf("raw white:  0x%x\r\n",w );
+        printf("RGB: %x %x %x\r\n\r\n",hexR,hexG,hexB);
+    }
+    RGBreturn[0]= hexR;
+    RGBreturn[1]= hexB;
+    RGBreturn[2]= hexG;
+    
+    return RGBreturn;
+    
+}
+ 
+void band_uart_init(){
+uint32_t err_code;
+    const app_uart_comm_params_t comm_params =
+      {
+          //RX_PIN_NUMBER,
+          //TX_PIN_NUMBER,
+                    9,
+                    10,
+                    12,
+                    11,
+          //RTS_PIN_NUMBER,
+          //CTS_PIN_NUMBER,
+          APP_UART_FLOW_CONTROL_ENABLED,
+          false,
+          UART_BAUDRATE_BAUDRATE_Baud9600
+      };
+
+    APP_UART_FIFO_INIT(&comm_params,
+                         UART_RX_BUF_SIZE,
+                         UART_TX_BUF_SIZE,
+                         uart_error_handle,
+                         APP_IRQ_PRIORITY_LOWEST,
+                         err_code);
+
+    APP_ERROR_CHECK(err_code);
+    printf("\r\nUART works\r\n");
+}
+
+void scan_twi(){ //works 12/27/2019
+    //check for TWI dvices
+    uint8_t sample_data;
+    uint8_t address;
+    uint32_t err_code;
+    for (address = 1; address <= 127; address++){
+        err_code = nrf_drv_twi_rx(&m_twi, address, &sample_data, sizeof(sample_data));
+        if (err_code == NRF_SUCCESS)
+        {
+            printf("TWI device detected at address 0x%x.\r\n", address);
+        }
+    }
+}
+
+void scan_twi1(){
+
+    
+    //check for TWI dvices
+    uint8_t sample_data;
+    uint8_t address;
+    uint32_t err_code;
+    for (address = 1; address <= 127; address++){
+        err_code = nrf_drv_twi_rx(&m_twi1, address, &sample_data, sizeof(sample_data));
+        if (err_code == NRF_SUCCESS)
+        {
+            printf("TWI1 device detected at address 0x%x.\r\n", address);
+        }
+    }
+}
+
+void LED_demo(){
+    LED_indicator_init();
+    LED_BT_blue();
+    LED_PWR_yellow();
+        
+    int delayTime = 300;
+    
+    hi:
+    
+    for(int i = 0; i< 4; i++){
+        LED_BT_blue();
+        LED_PWR_red();
+        nrf_delay_ms(delayTime);
+        LED_BT_off();
+        LED_PWR_off();
+        nrf_delay_ms(delayTime);
+    }
+    for(int i = 0; i< 4; i++){
+        LED_BT_blue();
+        LED_PWR_yellow();
+        nrf_delay_ms(delayTime);
+        LED_BT_off();
+        LED_PWR_off();
+        nrf_delay_ms(delayTime);
+    }
+    for(int i = 0; i< 4; i++){
+        LED_BT_blue();
+        LED_PWR_green();
+        nrf_delay_ms(delayTime);
+        LED_BT_off();
+        LED_PWR_off();
+        nrf_delay_ms(delayTime);
+    }
+    LED_PWR_green();
+    LED_BT_green();
+    nrf_delay_ms(4*delayTime);
+    LED_PWR_off();
+    LED_BT_off();
+    
+    while(true){
+        if(nrf_gpio_pin_read(3)==0){
+            goto hi;
+        }
+        if(nrf_gpio_pin_read(5) == 0){
+            goto hi;
+        }
+    }
+}
+
+void VIBRO_test(){
+    //vibro tests
+    vibro_init();
+    while(true){
+        //vibration motor test
+        vibro_start();
+        nrf_delay_ms(1000);
+        vibro_stop();
+        nrf_delay_ms(1000);
+    }
+    //vibro results V2: The voltage at the motor is 0.2V too low for the motor to run
+    //to fix, choose another MOSFET or connect Vibro to VUSB
+}
+
+void bt_btn_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
+  //place code here to run when the bluetooth button is pressed
+    LED_BT_blue();
+    nrf_delay_ms(200);
+    LED_BT_off();
+    printf("bt button pressed!\r\n");
+}
+void pwr_btn_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
+    //place code here to run when the power button is pressed
+    LED_PWR_red();
+    nrf_delay_ms(200);
+    LED_PWR_off();
+    printf("pwr button pressed!\r\n");
+}
+void button_init_interrupt(){
+    int pwr_pin = 5;
+    int bt_pin = 3;
+    ret_code_t err_code;
+
+        //set up GPIOTE drivers
+    err_code = nrf_drv_gpiote_init();
+    APP_ERROR_CHECK(err_code);
+    
+    //set the pin we want to be a sense pin
+        nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+    in_config.pull = NRF_GPIO_PIN_PULLUP;
+
+        //attach GPIO tasker to power button
+    err_code = nrf_drv_gpiote_in_init(pwr_pin, &in_config, pwr_btn_handler);
+    APP_ERROR_CHECK(err_code);
+    nrf_drv_gpiote_in_event_enable(pwr_pin, true);
+    
+        //attach GPIO event to bluetooth button
+        err_code = nrf_drv_gpiote_in_init(bt_pin, &in_config, bt_btn_handler);
+    APP_ERROR_CHECK(err_code);
+    nrf_drv_gpiote_in_event_enable(bt_pin, true);
+}
+
+//===============================END SENSOR STUFF=====================================
+
 /**@brief Function for application main entry.
  */
 int main(void)
@@ -1114,8 +1610,6 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    UART_init(); //init UART before sensors for debug messages to print
-    sensors_init();
     
   
     timers_init();
@@ -1137,7 +1631,45 @@ int main(void)
         fds_init_wait_flag = 0; 
     }*/
     
+    //sensor code
+        //These are direct NRF GPIO
+    MUX_init();                     //setup nrf GPIO to output
+    MUX_set(1,1,1,1);       //1111 for SDA -> LEDs  (s3 s2 s1 s0)
+    band_uart_init();       // setup UART
+        
+    //then do twi init, since it tends to get stuck here
+    twi_init();
+    //twi1_init();
     
+    nrf_delay_ms(1000);
+    scan_twi(); // do a twi scan
+    //scan_twi1();
+    
+    //buttons
+    //button_init_simple();
+    button_init_interrupt(); //turns on BT light when button pressed
+    
+    
+    //indicator LED stuff on 0x23 expander
+    LED_indicator_init();
+    //LED_demo();
+    LED_PWR_yellow();
+    
+    
+
+    
+    //indicator LED stuff on 0x22 expander
+    LED_vertBoard_init();
+    //LED_WHITE_on();
+    
+    LED_demo();
+    
+    //RGBW setup
+    MUX_set(0,0,1,1);
+    RGBW_on();
+
+    MUX_set(1,1,1,1);   
+    //end sensor code   
     while(m_custom_value <= 1)
     {
       power_manage();

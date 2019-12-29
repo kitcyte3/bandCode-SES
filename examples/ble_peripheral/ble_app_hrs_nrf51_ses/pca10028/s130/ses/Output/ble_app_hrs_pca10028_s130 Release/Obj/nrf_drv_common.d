@@ -1,8 +1,8 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/nrf_drv_common.o: \
- F:\vidar_modified_2\components\drivers_nrf\common\nrf_drv_common.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\drivers_nrf\common\nrf_drv_common.c \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
- F:\vidar_modified_2\components\drivers_nrf\common\nrf_drv_common.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\drivers_nrf\common\nrf_drv_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \

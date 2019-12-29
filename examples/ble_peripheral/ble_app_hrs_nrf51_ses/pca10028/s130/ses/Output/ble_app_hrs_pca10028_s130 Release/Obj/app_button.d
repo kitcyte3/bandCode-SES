@@ -1,5 +1,5 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/app_button.o: \
- F:\vidar_modified_2\components\libraries\button\app_button.c \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\button\app_button.c \
  ../../../../../../components/libraries/util/sdk_common.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
@@ -23,7 +23,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/app_button.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/sdk_macros.h \
- F:\vidar_modified_2\components\libraries\button\app_button.h \
+ C:\Users\knigh\Documents\bandCode-SES\components\libraries\button\app_button.h \
  ../../../../../../components/libraries/util/app_error.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
  ../../../../../../components/libraries/util/app_error_weak.h \

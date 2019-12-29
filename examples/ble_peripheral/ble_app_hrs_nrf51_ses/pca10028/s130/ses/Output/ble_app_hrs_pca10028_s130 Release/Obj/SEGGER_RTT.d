@@ -1,7 +1,7 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/SEGGER_RTT.o: \
- F:\vidar_modified_2\external\segger_rtt\SEGGER_RTT.c \
- F:\vidar_modified_2\external\segger_rtt\SEGGER_RTT.h \
- F:\vidar_modified_2\external\segger_rtt\SEGGER_RTT_Conf.h \
+ C:\Users\knigh\Documents\bandCode-SES\external\segger_rtt\SEGGER_RTT.c \
+ C:\Users\knigh\Documents\bandCode-SES\external\segger_rtt\SEGGER_RTT.h \
+ C:\Users\knigh\Documents\bandCode-SES\external\segger_rtt\SEGGER_RTT_Conf.h \
  ../config/sdk_config.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/libraries/util/app_util_platform.h \
