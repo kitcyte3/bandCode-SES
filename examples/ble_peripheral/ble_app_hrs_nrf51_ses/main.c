@@ -16,6 +16,9 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "bandSensors.h"
+
+
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
@@ -31,6 +34,7 @@
 #include "fstorage.h"
 #include "fds.h"
 #include "peer_manager.h"
+#include "nrf_delay.h"
 
 #include "bsp.h"
 #include "bsp_btn_ble.h"
@@ -69,6 +73,8 @@
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
 
+//#define APP_TIMER_KEEPS_RTC_ACTIVE      1 //sdk_config.h line 1705
+
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.1 seconds). */
 #define MAX_CONN_INTERVAL               MSEC_TO_UNITS(200, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (0.2 second). */
 #define SLAVE_LATENCY                   0                                           /**< Slave latency. */
@@ -88,17 +94,25 @@
 #define SEC_PARAM_MAX_KEY_SIZE          16                                          /**< Maximum encryption key size. */
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
-#define TIMER_INTERVAL           				APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER)
+#define TIMER_INTERVAL                  APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER)
+#define FDS_INIT_INTERVAL               APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)
 
 static ble_os_t m_cus;
-//BLE_CUS_DEF(m_cus); 
+static ble_os_t m_cus2;
+static ble_os_t m_cus3;
+static ble_os_t m_cus4;
+static ble_os_t m_cus5;
+static ble_os_t m_cus6;
+static ble_os_t m_cus7;
+static ble_os_t m_cus8;
 
+
+APP_TIMER_DEF(m_fds_init_timer_id);
 APP_TIMER_DEF(m_app_timer_id);
 
-static ble_gap_sec_params_t             m_sec_params;                               /**< Security requirements for this application. */
 static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
 
-
+static uint8_t fds_init_wait_flag = 0;
 
 static uint8_t m_custom_value = 0;
 static uint8_t notif_bool = 0;
@@ -262,6 +276,10 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
     }
 }
 
+static void fds_init_timeout_handler(void * p_context)
+{
+    fds_init_wait_flag = 1;
+}
 
 static void timer_timeout_handler(void * p_context)
 {
@@ -270,9 +288,16 @@ static void timer_timeout_handler(void * p_context)
     
     // Increment the value of m_custom_value before nortifing it.
     m_custom_value++;
-		
-		if(notif_bool == 1){
-       err_code = ble_cus_custom_value_update(&m_cus, m_custom_value);
+  
+     /*
+    if(m_custom_value % 2 == 1){
+        //sensor_code();
+    }
+    */
+    
+    if(notif_bool == 1){
+       //err_code = ble_cus_custom_value_update(&m_cus, m_custom_value);
+      err_code = ble_cus_custom_value_update(&m_cus, m_custom_value, &m_cus.custom_value_handles);
     }
     
 }
@@ -296,9 +321,11 @@ static void timers_init(void)
        uint32_t err_code;
        err_code = app_timer_create(&m_app_timer_id, APP_TIMER_MODE_REPEATED, timer_timeout_handler);
        APP_ERROR_CHECK(err_code); */
-			uint32_t err_code;
+       uint32_t err_code;
        err_code = app_timer_create(&m_app_timer_id, APP_TIMER_MODE_REPEATED, timer_timeout_handler);
        APP_ERROR_CHECK(err_code); 
+  
+       app_timer_create(&m_fds_init_timer_id, APP_TIMER_MODE_SINGLE_SHOT, fds_init_timeout_handler);
 }
 
 
@@ -422,19 +449,121 @@ static void services_init(void)
        err_code = ble_yy_service_init(&yys_init, &yy_init);
        APP_ERROR_CHECK(err_code);
      */
-		  ret_code_t          err_code;
-		  ble_cus_init_t      cus_init = {0};
-			
-			// Initialize CUS Service init structure to zero.
+      ret_code_t          err_code;
+      ble_cus_init_t      cus_init = {0};
+      
+      // Initialize CUS Service init structure to zero.
       cus_init.evt_handler                = on_cus_evt;
-			
-			BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init.custom_value_char_attr_md.cccd_write_perm);
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init.custom_value_char_attr_md.cccd_write_perm);
       BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init.custom_value_char_attr_md.read_perm);
       BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init.custom_value_char_attr_md.write_perm);
-		 
-			//our_service_init (&m_our_service, & cus_init);
-			our_service_init(&m_cus, &cus_init);
-		
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init(&m_cus, &cus_init);
+      
+      ble_cus_char2_init(&m_cus, &cus_init); //Second custom characteristic init
+      
+      ble_cus_char3_init(&m_cus, &cus_init); //Third custom characteristic init
+      
+      //Second custom service init
+      
+      ble_cus_init_t      cus_init2 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init2.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init2.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init2.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init2.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init2(&m_cus2, &cus_init2);
+  
+  //Third custom service init
+      
+      ble_cus_init_t      cus_init3 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init3.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init3.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init3.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init3.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init3(&m_cus3, &cus_init3);
+  
+  //Fourth custom service init
+      
+      ble_cus_init_t      cus_init4 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init4.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init4.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init4.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init4.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init4(&m_cus4, &cus_init4);
+  
+  //Fifth custom service init
+      
+      ble_cus_init_t      cus_init5 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init5.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init5.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init5.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init5.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init5(&m_cus5, &cus_init5);
+  
+  //Sixth custom service init
+      
+      ble_cus_init_t      cus_init6 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init6.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init6.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init6.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init6.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init6(&m_cus6, &cus_init6);
+  
+  //Seventh custom service init
+      
+      ble_cus_init_t      cus_init7 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init7.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init7.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init7.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init7.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init7(&m_cus7, &cus_init7);
+  
+  //Eighth custom service init
+      
+      ble_cus_init_t      cus_init8 = {0};
+      
+      // Initialize CUS Service init structure to zero.
+      cus_init8.evt_handler                = on_cus_evt;
+      
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init8.custom_value_char_attr_md.cccd_write_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init8.custom_value_char_attr_md.read_perm);
+      BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cus_init8.custom_value_char_attr_md.write_perm);
+     
+      //our_service_init (&m_our_service, & cus_init);
+      our_service_init8(&m_cus8, &cus_init8);
+    
 
 }
 
@@ -502,9 +631,11 @@ static void application_timers_start(void)
        uint32_t err_code;
        err_code = app_timer_start(m_app_timer_id, TIMER_INTERVAL, NULL);
        APP_ERROR_CHECK(err_code); */
-			 ret_code_t err_code;
+       ret_code_t err_code;
        err_code = app_timer_start(m_app_timer_id, TIMER_INTERVAL, NULL);
        APP_ERROR_CHECK(err_code);
+        
+       app_timer_start(m_fds_init_timer_id, FDS_INIT_INTERVAL, NULL);
 }
 
 
@@ -657,6 +788,11 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
      * Remember to call ble_conn_state_on_ble_evt before calling any ble_conns_state_* functions. */
     ble_conn_state_on_ble_evt(p_ble_evt);
     pm_on_ble_evt(p_ble_evt);
+  
+    ble_cus_on_ble_evt(p_ble_evt, &m_cus);
+    ble_cus_on_ble_evt(p_ble_evt, &m_cus2);
+
+  
     ble_conn_params_on_ble_evt(p_ble_evt);
     bsp_btn_ble_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
@@ -815,6 +951,34 @@ static ble_uuid_t m_adv_uuids[] =
     {
         BLE_UUID_OUR_SERVICE,
         BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+    {
+      BLE_UUID_OUR_SERVICE2,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE3,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE4,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE5,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE6,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE7,
+      BLE_UUID_TYPE_VENDOR_BEGIN
+    },
+  {
+      BLE_UUID_OUR_SERVICE8,
+      BLE_UUID_TYPE_VENDOR_BEGIN
     }
 };
 
@@ -858,7 +1022,7 @@ static void advertising_init(void)
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
     advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    advdata.uuids_complete.uuid_cnt = 1;//sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = m_adv_uuids;
 
     memset(&options, 0, sizeof(options));
@@ -911,7 +1075,34 @@ static void advertising_start(void)
     APP_ERROR_CHECK(err_code);
 }
 
+static void UART_init(){
+  uint32_t err_code_; // modified uint32_t err_code to uint32_t err_code_
+  const app_uart_comm_params_t comm_params =
+    {
+        9,10,12,11,
+        APP_UART_FLOW_CONTROL_ENABLED,
+        false,
+        UART_BAUDRATE_BAUDRATE_Baud115200
+    };
 
+  APP_UART_FIFO_INIT(&comm_params,
+                       UART_RX_BUF_SIZE,
+                       UART_TX_BUF_SIZE,
+                       uart_error_handle,
+                       APP_IRQ_PRIORITY_LOW,
+                       err_code_);
+
+  APP_ERROR_CHECK(err_code_);
+}
+static void sensors_init(){
+  GPIOEXP1_init();
+  MUX_init();
+  twi_init();
+  printf("\r\nFinished twi init: \r\n");
+  LEDS_CONFIGURE(LEDS_MASK);
+  LEDS_OFF(LEDS_MASK);
+  LED_BT_on();
+}
 /**@brief Function for application main entry.
  */
 int main(void)
@@ -923,8 +1114,12 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    UART_init(); //init UART before sensors for debug messages to print
+    sensors_init();
+    
+  
     timers_init();
-		application_timers_start();
+    application_timers_start();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     peer_manager_init(erase_bonds);
@@ -932,8 +1127,23 @@ int main(void)
     {
         NRF_LOG_INFO("Bonds erased!\r\n");
     }
+    /*
+    while(fds_init_wait_flag != 1)
+    {
+      power_manage();
+    }
+
+    if(fds_init_wait_flag == 1){
+        fds_init_wait_flag = 0; 
+    }*/
+    
+    
+    while(m_custom_value <= 1)
+    {
+      power_manage();
+    } 
     gap_params_init();
-		services_init();
+    services_init();
     advertising_init();
     conn_params_init();
 
