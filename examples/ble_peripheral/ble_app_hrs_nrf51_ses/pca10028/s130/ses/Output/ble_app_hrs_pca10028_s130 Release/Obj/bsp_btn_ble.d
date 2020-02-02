@@ -1,7 +1,7 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp_btn_ble.o: \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp_btn_ble.c \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp_btn_ble.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
@@ -14,7 +14,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp_btn_ble.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gattc.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\bsp\bsp.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  ../../../../../../components/boards/boards.h \
  ../../../../../../components/drivers_nrf/hal/nrf_gpio.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
@@ -31,15 +31,15 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/bsp_btn_ble.o: \
  ../../../../../../modules/nrfx/mdk/nrf51422_peripherals.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../config/sdk_config.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/libraries/util/app_error_weak.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdlib.h \
  ../../../../../../components/boards/pca10028.h \
  ../../../../../../components/libraries/button/app_button.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stddef.h

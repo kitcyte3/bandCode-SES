@@ -1,8 +1,8 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/our_service.o: \
  C:\Users\knigh\Documents\bandCode-SES\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.c \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/string.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/string.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h \
  C:\Users\knigh\Documents\bandCode-SES\examples\ble_peripheral\ble_app_hrs_nrf51_ses\our_service.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
@@ -16,7 +16,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/our_service.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gattc.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
  ../../../../../../components/ble/common/ble_srv_common.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
@@ -33,7 +33,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/our_service.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gap.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatt.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdio.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../config/sdk_config.h \
@@ -59,7 +59,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/our_service.o: \
  ../../../../../../components/libraries/log/nrf_log_ctrl.h \
  ../../../../../../components/libraries/log/src/nrf_log_ctrl_internal.h \
  ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdlib.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/softdevice/s130/headers/nrf_sdm.h \
  ../../../../../../components/softdevice/s130/headers/nrf_soc.h \

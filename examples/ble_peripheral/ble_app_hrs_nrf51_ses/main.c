@@ -422,7 +422,7 @@ static void gap_params_init(void)
         default:
             // No implementation needed.
             break;
-    }
+,,3    }
    }*/
 
 
@@ -1601,22 +1601,48 @@ void button_init_interrupt(){
 }
 uint8_t* prox_get(){
     ret_code_t err_code;
-                    //read VCNL prox snesor data
-                    uint8_t address = 0x60; //0x60  for prox                    
-                    uint8_t dataToSend2[3] = {0x03,0x00,0x00};
-                    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend2[0], sizeof(dataToSend2), false);
-                    
-                    //first half of read
-                    uint8_t dataToSend[1] = {0xF2};
-                    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend[0], sizeof(dataToSend), true);
+    //read VCNL prox snesor data
+    uint8_t address = 0x60; //0x60  for prox                    
+    uint8_t dataToSend2[3] = {0x03,0x00,0x00};
+    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend2[0], sizeof(dataToSend2), false);
+    
+    //first half of read
+    uint8_t dataToSend[1] = {0xF2};
+    err_code = nrf_drv_twi_tx(&m_twi, address, &dataToSend[0], sizeof(dataToSend), true);
 
 
-                    uint8_t read_data[2];
-            err_code = nrf_drv_twi_rx(&m_twi, address, &read_data[0], 2);
-                    printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
-                    if (err_code == NRF_SUCCESS){}
-                        nrf_delay_ms(200);
-                        return read_data;
+    uint8_t read_data[2];
+    err_code = nrf_drv_twi_rx(&m_twi, address, &read_data[0], 2);
+    printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
+    if (err_code == NRF_SUCCESS){}
+    nrf_delay_ms(50);
+    return read_data; //return address to first element of array
+}
+uint8_t* scanAllProx(){
+  //returns the prox data from all 4 prox sensors starting from the USB side
+  //in this format: [prox1, prox1, prox2, prox2, prox3, prox3, prox4]
+
+  uint8_t proxData[8]={0,0,0,0,0,0,0,0}; //being very explicit
+  //starting from the USB side
+  MUX_set(0,1,1,0); // I6
+  proxData[0]=prox_get()[0];
+  proxData[1]=prox_get()[1];
+  MUX_set(0,1,1,1); // I7
+  proxData[2]=prox_get()[0];
+  proxData[3]=prox_get()[1];
+  MUX_set(0,0,1,1); // I3
+  proxData[4]=prox_get()[0];
+  proxData[5]=prox_get()[1];
+  MUX_set(0,0,1,1); // I2
+  proxData[6]=prox_get()[0];
+  proxData[7]=prox_get()[1];
+
+  //print out all info
+  printf("all prox data:\n");
+  for(int i = 0; i< 8; i=i+2){
+    printf("%x %x\n",proxData[i], proxData[i+1]);
+  }
+
 }
 //===============================END SENSOR STUFF=====================================
 
@@ -1642,18 +1668,9 @@ int main(void)
     {
         NRF_LOG_INFO("Bonds erased!\r\n");
     }
-    /*
-    while(fds_init_wait_flag != 1)
-    {
-      power_manage();
-    }
-
-    if(fds_init_wait_flag == 1){
-        fds_init_wait_flag = 0; 
-    }*/
     
     //sensor code
-        //These are direct NRF GPIO
+    //These are direct NRF GPIO
     MUX_init();                     //setup nrf GPIO to output
     MUX_set(1,1,1,1);       //1111 for SDA -> LEDs  (s3 s2 s1 s0)
     band_uart_init();       // setup UART
@@ -1673,7 +1690,7 @@ int main(void)
     
     //indicator LED stuff on 0x23 expander
     LED_indicator_init();
-    //LED_demo();
+    LED_demo();
     LED_PWR_yellow();
     
     
@@ -1683,7 +1700,7 @@ int main(void)
     LED_vertBoard_init();
     //LED_WHITE_on();
     
-    LED_demo();
+    //LED_demo();
     
     //RGBW setup
     MUX_set(0,0,1,1);
@@ -1691,10 +1708,11 @@ int main(void)
 
     MUX_set(1,1,1,1);  
 
-    //get prox data
-    uint8_t * proxData = 0;
-    proxData = prox_get();
-    prox_Data0 = prox_get();
+    
+  while(true){
+    scanAllProx();
+        nrf_delay_ms(250);
+  }
 
     //end sensor code   
     while(m_custom_value <= 1)
@@ -1717,6 +1735,8 @@ int main(void)
     // Enter main loop.
     for (;;)
     {
+        scanAllProx();
+        nrf_delay_ms(250);
         if (NRF_LOG_PROCESS() == false)
         {
             power_manage();

@@ -1,7 +1,7 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/app_util_platform.o: \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\app_util_platform.c \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\app_util_platform.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
  ../../../../../../modules/nrfx/mdk/nrf51.h \
@@ -15,9 +15,9 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/app_util_platform.o: \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\nrf_assert.h \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\sdk_errors.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../config/sdk_config.h \

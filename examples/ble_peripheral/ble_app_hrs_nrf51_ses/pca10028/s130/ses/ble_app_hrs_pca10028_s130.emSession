@@ -3,7 +3,6 @@
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
   <BreakpointListItem trigger="Execute" line="0" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="0x91d0" group="Breakpoints" type="Breakpoint" state="2" filename="../ses" useHWbreakpoint="false"/>
-  <Exceptions set="HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBufferWindow>
@@ -66,7 +65,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="409" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="404" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="4" y="1678" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="1669" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="ble_app_hrs_pca10028_s130" fileDialogDefaultFilter="*.h" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/Users/nu/Downloads/nRF5_SDK_12.3.0_SES_51_example/components/drivers_nrf/delay" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

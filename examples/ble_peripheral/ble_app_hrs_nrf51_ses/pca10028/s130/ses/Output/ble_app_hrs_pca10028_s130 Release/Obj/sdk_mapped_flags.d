@@ -1,8 +1,8 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/sdk_mapped_flags.o: \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\sdk_mapped_flags.c \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\sdk_mapped_flags.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  C:\Users\knigh\Documents\bandCode-SES\components\libraries\util\app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
@@ -15,5 +15,5 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/sdk_mapped_flags.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_bitfields.h \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stddef.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h

@@ -1,7 +1,7 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_conn_params.o: \
  C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_conn_params.c \
  C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_conn_params.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
  ../../../../../../components/softdevice/s130/headers/ble.h \
  ../../../../../../components/softdevice/s130/headers/ble_ranges.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
@@ -14,7 +14,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_conn_params.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gattc.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
  C:\Users\knigh\Documents\bandCode-SES\components\ble\common\ble_srv_common.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  ../../../../../../components/softdevice/s130/headers/ble_types.h \
  ../../../../../../components/libraries/util/app_util.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
@@ -30,14 +30,14 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/ble_conn_params.o: \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/softdevice/s130/headers/ble_gap.h \
  ../../../../../../components/softdevice/s130/headers/ble_gatt.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdlib.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/softdevice/s130/headers/ble_hci.h \
  ../../../../../../components/libraries/timer/app_timer.h \
  ../config/sdk_config.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdio.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../../../../../../components/libraries/util/nordic_common.h \

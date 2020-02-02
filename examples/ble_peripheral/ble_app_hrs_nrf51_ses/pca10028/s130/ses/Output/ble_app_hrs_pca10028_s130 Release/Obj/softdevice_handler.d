@@ -1,12 +1,12 @@
 Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\softdevice_handler.c \
  C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\softdevice_handler.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdlib.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdlib.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/__crossworks.h \
  ../../../../../../components/libraries/util/nordic_common.h \
  ../../../../../../components/softdevice/s130/headers/nrf_sdm.h \
  ../../../../../../components/softdevice/s130/headers/nrf_svc.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdint.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdint.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
  ../../../../../../modules/nrfx/mdk/nrf51.h \
  ../../../../../../components/toolchain/cmsis/include/core_cm0.h \
@@ -18,12 +18,12 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  ../../../../../../modules/nrfx/mdk/nrf51_deprecated.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
  ../../../../../../components/softdevice/s130/headers/nrf_soc.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdbool.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdbool.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error_soc.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error_sdm.h \
  ../../../../../../components/libraries/util/app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stdio.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/softdevice/s130/headers/nrf_error.h \
  ../config/sdk_config.h \
@@ -43,7 +43,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  ../../../../../../components/softdevice/s130/headers/ble_gatts.h \
  C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\ant_stack_handler_types.h \
  C:\Users\knigh\Documents\bandCode-SES\components\softdevice\common\softdevice_handler\app_ram_base.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/string.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/string.h \
  ../../../../../../components/libraries/util/nrf_assert.h \
  ../../../../../../components/libraries/util/app_error.h \
  ../../../../../../components/softdevice/s130/headers/nrf_soc.h \
@@ -55,7 +55,7 @@ Output/ble_app_hrs_pca10028_s130\ Release/Obj/softdevice_handler.o: \
  ../../../../../../components/drivers_nrf/clock/nrf_drv_clock.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
  ../../../../../../components/drivers_nrf/hal/nrf_clock.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.18/include/stddef.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.30c/include/stddef.h \
  ../../../../../../components/drivers_nrf/common/nrf_drv_common.h \
  ../../../../../../components/libraries/log/nrf_log.h \
  ../../../../../../components/libraries/log/src/nrf_log_internal.h
