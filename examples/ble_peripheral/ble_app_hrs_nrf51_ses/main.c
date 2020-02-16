@@ -1341,7 +1341,100 @@ bool LED_PWR_off(){
     writei2cSingle(0x23, 0x04, res); //set green light away from USB on
     return 0;
 }
+bool LED_IND1_blue(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x04); //read LED register 0
+    res = (res & ~0x40); //forces the blue bit to be a 0
+    res = (res | 0x30); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x04, res);//set register 0
+    return 0;
+}
+bool LED_IND2_blue(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x04); //read LED register 0
+    uint8_t res1 = readi2cOneByte(0x22, 0x05); //read LED register 1
+    res = (res & ~0x80); //forces the blue bit to be a 0
+    res1 = (res1 | 0x3); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x04, res);//set register 0
+    writei2cSingle(0x22, 0x05, res1);//set register 0
+    return 0;
+}
+bool LED_IND3_blue(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x06); //read LED register 0
+    res = (res & ~0x08); //forces the blue bit to be a 0
+    res = (res | 0x06); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x06, res);//set register 0
+    return 0;
+}
+bool LED_IND4_blue(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x06); //read LED register 0
+    res = (res & ~0x40); //forces the blue bit to be a 0
+    res = (res | 0x30); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x06, res);//set register 0
+    return 0;
+}
+bool LED_IND1_off(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x04); //read LED register 0
+    res = (res | 0x70); //forces the red blue and green bits to be 1
+    writei2cSingle(0x22, 0x04, res);//set register 0
+    return 0;
+}
+bool LED_IND2_off(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x04); //read LED register 0
+    uint8_t res1 = readi2cOneByte(0x22, 0x05); //read LED register 1
+    res = (res | 0x80); //forces the blue bit to be a 0
+    res1 = (res1 | 0x3); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x04, res);//set register 0
+    writei2cSingle(0x22, 0x05, res1);//set register 0
+    return 0;
+}
+bool LED_IND3_off(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x06); //read LED register 0
+    res = (res | 0x08); //forces the blue bit to be a 1
+    res = (res | 0x06); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x06, res);//set register 0
+    return 0;
+}
+bool LED_IND4_off(){
+    MUX_set(1,1,1,1);
+    //make sure GPIOEXP1_init was run before this function.
+    //see explanation in LED_BT_blue and LED_PWR_red
+    uint8_t res = readi2cOneByte(0x22, 0x06); //read LED register 0
+    res = (res | 0x70); //forces the red and green bits to be 1
+    writei2cSingle(0x22, 0x06, res);//set register 0
+    return 0;
+}
 
+
+bool LED_ALL_off(){
+    MUX_set(1,1,1,1);
+    writei2cSingle(0x22, 0x04, 0xFF);
+    writei2cSingle(0x22, 0x05, 0xFF);
+    writei2cSingle(0x22, 0x06, 0xFF);
+    writei2cSingle(0x23, 0x04, 0xFF);
+    writei2cSingle(0x23, 0x05, 0xFF);
+    writei2cSingle(0x23, 0x06, 0xFF);
+    return 0;
+}
 void LED_indicator_init(){
         //configuration registers set all outputs to outputs instead of default input
         writei2cSingle(0x23, 0x0C, 0x0); 
@@ -1360,9 +1453,9 @@ bool LED_WHITE_on(){
     //read current GPIOEXP1 settings:
     
     //LEDS WORK, BUT THIS DRIVER FUNCTION HASNT BEEN IMPLEMENTED CORRECTLY YET  
-    writei2cSingle(0x22, 0x04, 0x0);
-    writei2cSingle(0x22, 0x05, 0x0); 
-    writei2cSingle(0x22, 0x06, 0x0); 
+    writei2cSingle(0x22, 0x04, 0xF7);
+    writei2cSingle(0x22, 0x05, 0x7F); 
+    writei2cSingle(0x22, 0x06, 0x7E); 
     
     return 0;
 }
@@ -1599,7 +1692,7 @@ void button_init_interrupt(){
     APP_ERROR_CHECK(err_code);
     nrf_drv_gpiote_in_event_enable(bt_pin, true);
 }
-uint8_t* prox_get(){
+int prox_get(){
     ret_code_t err_code;
     //read VCNL prox snesor data
     uint8_t address = 0x60; //0x60  for prox                    
@@ -1616,32 +1709,30 @@ uint8_t* prox_get(){
     printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
     if (err_code == NRF_SUCCESS){}
     nrf_delay_ms(50);
-    return read_data; //return address to first element of array
+    int toReturn = (read_data[1]<<8) | read_data[0];
+    return toReturn; //return address to first element of array
 }
-uint8_t* scanAllProx(){
+int* scanAllProx(){
   //returns the prox data from all 4 prox sensors starting from the USB side
   //in this format: [prox1, prox1, prox2, prox2, prox3, prox3, prox4]
 
-  uint8_t proxData[8]={0,0,0,0,0,0,0,0}; //being very explicit
+  static int* proxData[4]={0,0,0,0}; //being very explicit
   //starting from the USB side
   MUX_set(0,1,1,0); // I6
-  proxData[0]=prox_get()[0];
-  proxData[1]=prox_get()[1];
+  proxData[0]=prox_get();
   MUX_set(0,1,1,1); // I7
-  proxData[2]=prox_get()[0];
-  proxData[3]=prox_get()[1];
+  proxData[1]=prox_get();
   MUX_set(0,0,1,1); // I3
-  proxData[4]=prox_get()[0];
-  proxData[5]=prox_get()[1];
+  proxData[2]=prox_get();
   MUX_set(0,0,1,1); // I2
-  proxData[6]=prox_get()[0];
-  proxData[7]=prox_get()[1];
+  proxData[3]=prox_get();
 
   //print out all info
   printf("all prox data:\n");
-  for(int i = 0; i< 8; i=i+2){
-    printf("%x %x\n",proxData[i], proxData[i+1]);
+  for(int i = 0; i< 4; i++){
+    printf("%x \n",proxData[i]);
   }
+  return proxData;
 
 }
 //===============================END SENSOR STUFF=====================================
@@ -1684,21 +1775,33 @@ int main(void)
     //scan_twi1();
     
     //buttons
-    //button_init_simple();
-    button_init_interrupt(); //turns on BT light when button pressed
-    
+    button_init_simple();
+    //button_init_interrupt(); //turns on BT light when button pressed
     
     //indicator LED stuff on 0x23 expander
     LED_indicator_init();
-    LED_demo();
-    LED_PWR_yellow();
     
+    //LED_demo();
+    LED_PWR_yellow();
+    LED_ALL_off();
     
 
     
     //indicator LED stuff on 0x22 expander
     LED_vertBoard_init();
     //LED_WHITE_on();
+    MUX_set(1,1,1,1);
+    /* THESE WORK
+    LED_IND1_blue();
+    LED_IND2_blue();
+    LED_IND3_blue();
+    LED_IND4_blue();
+    nrf_delay_ms(500);
+    LED_IND1_off();
+    LED_IND2_off();
+    LED_IND3_off();
+    LED_IND4_off();
+    */
     
     //LED_demo();
     
@@ -1706,13 +1809,7 @@ int main(void)
     MUX_set(0,0,1,1);
     RGBW_on();
 
-    MUX_set(1,1,1,1);  
-
-    
-  while(true){
-    scanAllProx();
-        nrf_delay_ms(250);
-  }
+    MUX_set(1,1,1,1);
 
     //end sensor code   
     while(m_custom_value <= 1)
@@ -1733,10 +1830,35 @@ int main(void)
     */
 
     // Enter main loop.
-    for (;;)
-    {
-        scanAllProx();
-        nrf_delay_ms(250);
+    while(true){
+        int* proxReturn= scanAllProx();
+        for(int i = 0; i<4; i++){
+          printf("%x ",proxReturn[i]);
+          if(proxReturn[i] >= 0x20){ //let 0x20 be the prox threshold for item detected
+            //turn on blue leds corresponding to the thing.
+            if(i==0){
+              LED_IND1_blue();
+            }else{
+              LED_IND1_off();
+            }
+            if(i==1){
+              LED_IND2_blue();
+            }else{
+              LED_IND2_off();
+            }
+            if(i==2){
+              LED_IND3_blue();
+            }else{
+              LED_IND3_off();
+            }
+            if(i==3){
+              LED_IND4_blue();
+            }else{
+              LED_IND4_off();
+            }
+          }
+        }
+        nrf_delay_ms(10);
         if (NRF_LOG_PROCESS() == false)
         {
             power_manage();
