@@ -1656,30 +1656,36 @@ void VIBRO_test(){
 
 void bt_btn_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
   //place code here to run when the bluetooth button is pressed
+ printf("bt button pressed!\r\n");
  ble_advertising_start(BLE_ADV_MODE_FAST);
     LED_BT_blue();
     nrf_delay_ms(200);
     LED_BT_off();
-    printf("bt button pressed!\r\n");
+    
 }
 void pwr_btn_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
     //place code here to run when the power button is pressed
+    printf("pwr button pressed!\r\n");
     LED_PWR_red();
     nrf_delay_ms(200);
     LED_PWR_off();
-    printf("pwr button pressed!\r\n");
 }
 void button_init_interrupt(){
     int pwr_pin = 5;
     int bt_pin = 3;
     ret_code_t err_code;
 
-        //set up GPIOTE drivers
-    err_code = nrf_drv_gpiote_init();
-    APP_ERROR_CHECK(err_code);
+
+        //set up GPIOTE drivers - apparentnly already done somewhere else. if below is uncommented, nrf goes in reboot loop because err_code is nonzero, and app error check reboots nrf when error_code is non-success
+    //if(!nrf_drv_gpiote_is_init()){
+    //  err_code = nrf_drv_gpiote_init();
+    //}
+    //APP_ERROR_CHECK(err_code);
+
+    printf("hiz\n");
     
     //set the pin we want to be a sense pin
-        nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+    nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
     in_config.pull = NRF_GPIO_PIN_PULLUP;
 
         //attach GPIO tasker to power button
@@ -1687,8 +1693,8 @@ void button_init_interrupt(){
     APP_ERROR_CHECK(err_code);
     nrf_drv_gpiote_in_event_enable(pwr_pin, true);
     
-        //attach GPIO event to bluetooth button
-        err_code = nrf_drv_gpiote_in_init(bt_pin, &in_config, bt_btn_handler);
+    //attach GPIO event to bluetooth button
+    err_code = nrf_drv_gpiote_in_init(bt_pin, &in_config, bt_btn_handler);
     APP_ERROR_CHECK(err_code);
     nrf_drv_gpiote_in_event_enable(bt_pin, true);
 }
@@ -1750,17 +1756,18 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    
-  
+   
     timers_init();
     application_timers_start();
-    buttons_leds_init(&erase_bonds);
-    ble_stack_init();
-    peer_manager_init(erase_bonds);
-    if (erase_bonds == true)
-    {
-        NRF_LOG_INFO("Bonds erased!\r\n");
-    }
+   
+      buttons_leds_init(&erase_bonds);
+      ble_stack_init();
+      peer_manager_init(erase_bonds);
+      if (erase_bonds == true)
+      {
+          NRF_LOG_INFO("Bonds erased!\r\n");
+      }
+    
     
     //sensor code
     //These are direct NRF GPIO
@@ -1777,9 +1784,11 @@ int main(void)
     //scan_twi1();
     
     //buttons
-    button_init_simple();
-    //button_init_interrupt(); //turns on BT light when button pressed
-    
+    //button_init_simple();
+    printf("before button init");
+    button_init_interrupt(); //turns on BT light when button pressed
+    printf("after button init");
+
     //indicator LED stuff on 0x23 expander
     LED_indicator_init();
     
@@ -1827,24 +1836,21 @@ int main(void)
     RGBW_on();
 
     MUX_set(1,1,1,1);
-
     //end sensor code   
-    while(m_custom_value <= 1)
-    {
-      power_manage();
-    } 
-    gap_params_init();
-    services_init();
-    advertising_init();
-    conn_params_init();
+    
+    
+      while(m_custom_value <= 1)
+      {
+        power_manage();
+      } 
+      gap_params_init();
+      services_init();
+      advertising_init();
+      conn_params_init();
 
-    // Start execution.
-    NRF_LOG_INFO("Template started\r\n");
-    //application_timers_start();
-    /*
-    err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
-    APP_ERROR_CHECK(err_code);
-    */
+      // Start execution.
+      //NRF_LOG_INFO("Template started\r\n");
+    
 
     // Enter main loop.
     while(true){
@@ -1888,9 +1894,7 @@ int main(void)
             }
           }
         }
-        nrf_delay_ms(10);
-        if (NRF_LOG_PROCESS() == false)
-        {
+        if (NRF_LOG_PROCESS() == false){
             power_manage();
         }
     }
