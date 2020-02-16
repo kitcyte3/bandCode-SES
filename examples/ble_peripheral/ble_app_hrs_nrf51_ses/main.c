@@ -1716,22 +1716,24 @@ int* scanAllProx(){
   //returns the prox data from all 4 prox sensors starting from the USB side
   //in this format: [prox1, prox1, prox2, prox2, prox3, prox3, prox4]
 
-  static int* proxData[4]={0,0,0,0}; //being very explicit
+  static int proxData[4]={0,0,0,0}; //being very explicit
   //starting from the USB side
   MUX_set(0,1,1,0); // I6
-  proxData[0]=prox_get();
+  proxData[0]=prox_get(); 
   MUX_set(0,1,1,1); // I7
   proxData[1]=prox_get();
   MUX_set(0,0,1,1); // I3
   proxData[2]=prox_get();
-  MUX_set(0,0,1,1); // I2
+  MUX_set(0,0,1,0); // I2
   proxData[3]=prox_get();
 
   //print out all info
+  /*
   printf("all prox data:\n");
   for(int i = 0; i< 4; i++){
     printf("%x \n",proxData[i]);
   }
+  */
   return proxData;
 
 }
@@ -1791,16 +1793,31 @@ int main(void)
     LED_vertBoard_init();
     //LED_WHITE_on();
     MUX_set(1,1,1,1);
-    /* THESE WORK
+     //THESE WORK
+     /*
     LED_IND1_blue();
+    nrf_delay_ms(500);
     LED_IND2_blue();
+    nrf_delay_ms(500);
     LED_IND3_blue();
+    nrf_delay_ms(500);
     LED_IND4_blue();
     nrf_delay_ms(500);
     LED_IND1_off();
+    nrf_delay_ms(500);
     LED_IND2_off();
+    nrf_delay_ms(500);
     LED_IND3_off();
+    nrf_delay_ms(500);
     LED_IND4_off();
+    nrf_delay_ms(500);
+    LED_IND4_blue();
+    LED_IND3_blue();
+    nrf_delay_ms(500);
+    LED_IND2_off();
+    nrf_delay_ms(500);
+    LED_IND1_off();
+    nrf_delay_ms(500);
     */
     
     //LED_demo();
@@ -1831,29 +1848,42 @@ int main(void)
 
     // Enter main loop.
     while(true){
+        bool LED_IND_on[4]={false,false,false,false};
         int* proxReturn= scanAllProx();
         for(int i = 0; i<4; i++){
           printf("%x ",proxReturn[i]);
           if(proxReturn[i] >= 0x20){ //let 0x20 be the prox threshold for item detected
             //turn on blue leds corresponding to the thing.
+            printf("prox sensor %d activated",i);
             if(i==0){
               LED_IND1_blue();
-            }else{
-              LED_IND1_off();
-            }
-            if(i==1){
+              LED_IND_on[0]=true;
+            }if(i==1){
               LED_IND2_blue();
-            }else{
-              LED_IND2_off();
+              LED_IND_on[1]=true;
             }
             if(i==2){
               LED_IND3_blue();
-            }else{
-              LED_IND3_off();
+              LED_IND_on[2]=true;
             }
             if(i==3){
               LED_IND4_blue();
-            }else{
+              LED_IND_on[3]=true;
+            }
+          }
+        }
+        for(int i = 0; i<4; i++){
+          if(LED_IND_on[i] == false){
+            if(i==0){
+              LED_IND1_off();
+            }else
+            if(i==1){
+              LED_IND2_off();
+            }else
+            if(i==2){
+              LED_IND3_off();
+            }else
+            if(i==3){
               LED_IND4_off();
             }
           }
