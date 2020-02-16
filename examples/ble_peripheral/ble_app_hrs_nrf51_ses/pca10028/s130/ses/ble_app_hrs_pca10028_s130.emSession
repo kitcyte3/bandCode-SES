@@ -1,7 +1,11 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints" active_group="Breakpoints"/>
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <BreakpointListItem trigger="" line="1680" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../main.c" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="1858" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../main.c" useHWbreakpoint="false"/>
+  <Exceptions set="HardFault"/>
+ </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBufferWindow>
   <FrameBufferWindow bufferHeight="-1" addressSpace="" addressText="" bufferWidth="-1"/>
@@ -63,7 +67,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="1837" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="1634" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="1088" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="1069" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="90" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/libraries/util/app_error.c" selected="0" top="70" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="264" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c" selected="0" top="250" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="166" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/drivers_nrf/delay/nrf_delay.h" selected="0" top="153" codecName=""/>
  </Files>
  <ARMCrossStudioWindow activeProject="ble_app_hrs_pca10028_s130" fileDialogDefaultFilter="*.asm;*.s;*.inc" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.18/source/thumb_crt0.s&#xa;" fileDialogInitialDirectory="/Users/nu/Downloads/nRF5_SDK_12.3.0_SES_51_example/components/drivers_nrf/delay" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

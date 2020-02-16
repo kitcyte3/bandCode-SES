@@ -1071,26 +1071,6 @@ static void advertising_init(void)
 }
 
 
-/**@brief Function for initializing buttons and leds.
- *
- * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
- */
-static void buttons_leds_init(bool * p_erase_bonds)
-{
-    bsp_event_t startup_event;
-
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                                 bsp_event_handler);
-
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_btn_ble_init(NULL, &startup_event);
-    APP_ERROR_CHECK(err_code);
-
-    *p_erase_bonds = (startup_event == BSP_EVENT_CLEAR_BONDING_DATA);
-}
-
 
 /**@brief Function for the Power manager.
  */
@@ -1677,10 +1657,10 @@ void button_init_interrupt(){
 
 
         //set up GPIOTE drivers - apparentnly already done somewhere else. if below is uncommented, nrf goes in reboot loop because err_code is nonzero, and app error check reboots nrf when error_code is non-success
-    //if(!nrf_drv_gpiote_is_init()){
-    //  err_code = nrf_drv_gpiote_init();
-    //}
-    //APP_ERROR_CHECK(err_code);
+    if(!nrf_drv_gpiote_is_init()){
+      err_code = nrf_drv_gpiote_init();
+    }
+    APP_ERROR_CHECK(err_code);
 
     printf("hiz\n");
     
@@ -1712,7 +1692,7 @@ int prox_get(){
 
     uint8_t read_data[2];
     err_code = nrf_drv_twi_rx(&m_twi, address, &read_data[0], 2);
-    printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
+    //printf("recieved: 0x%x 0x%x\r\n",read_data[1], read_data[0]);
     if (err_code == NRF_SUCCESS){}
     nrf_delay_ms(50);
     int toReturn = (read_data[1]<<8) | read_data[0];
@@ -1749,6 +1729,7 @@ int* scanAllProx(){
  */
 int main(void)
 {
+    band_uart_init();       // setup UART
     uint32_t err_code;
     bool     erase_bonds;
 
@@ -1759,8 +1740,7 @@ int main(void)
    
     timers_init();
     application_timers_start();
-   
-      buttons_leds_init(&erase_bonds);
+
       ble_stack_init();
       peer_manager_init(erase_bonds);
       if (erase_bonds == true)
@@ -1768,12 +1748,17 @@ int main(void)
           NRF_LOG_INFO("Bonds erased!\r\n");
       }
     
-    
     //sensor code
     //These are direct NRF GPIO
     MUX_init();                     //setup nrf GPIO to output
     MUX_set(1,1,1,1);       //1111 for SDA -> LEDs  (s3 s2 s1 s0)
-    band_uart_init();       // setup UART
+    
+    
+    //buttons
+    //button_init_simple();
+    printf("before button init");
+    button_init_interrupt(); //turns on BT light when button pressed
+    printf("after button init");
         
     //then do twi init, since it tends to get stuck here
     twi_init();
@@ -1783,12 +1768,7 @@ int main(void)
     scan_twi(); // do a twi scan
     //scan_twi1();
     
-    //buttons
-    //button_init_simple();
-    printf("before button init");
-    button_init_interrupt(); //turns on BT light when button pressed
-    printf("after button init");
-
+    
     //indicator LED stuff on 0x23 expander
     LED_indicator_init();
     
@@ -1878,6 +1858,7 @@ int main(void)
             }
           }
         }
+        printf("\n");
         for(int i = 0; i<4; i++){
           if(LED_IND_on[i] == false){
             if(i==0){
